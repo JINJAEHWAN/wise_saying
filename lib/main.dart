@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wise_saying/sub/first.dart';
+import 'package:wise_saying/sub/second.dart';
 
 
 void main() {
@@ -8,150 +10,49 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Firstpage(),
+      title: '명언',
+      home: firstpage(),
     );
   }
 }
 
-
-
-
-
-class Firstpage extends StatelessWidget {
+class firstpage extends StatefulWidget {
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            Container(
-              child: ElevatedButton(
-                child: const Text('스포츠'),
-                onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context)=> sport()),
-                  );
-                },
-              ),
-            ),
-            Container(
-              child: ElevatedButton(
-                child: const Text('역사'),
-                onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context)=> history()),
-                  );
-                },
-              ),
-            ),
-            Container(
-              child: ElevatedButton(
-                child: const Text('일상'),
-                onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context)=> day()),
-                  );
-                },
-              ),
-            ),
-            Container(
-              child: ElevatedButton(
-                child: const Text('만화'),
-                onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context)=> animation()),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  _firstpageState createState() => _firstpageState();
 }
 
+class _firstpageState extends State<firstpage>
+    with SingleTickerProviderStateMixin{
 
-class sport extends StatelessWidget {
+  TabController? controller;
   @override
+  void initState(){
+    super.initState();
+    controller = TabController(length: 2, vsync: this);
+
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('스포츠 명언'),
+        title: Text('명언'),
       ),
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            Container(
-              child: Text("끝날 때까지 끝난 게 아니다. -요기 베라"),
-            )
-          ],
-        ),
+      body: TabBarView(
+        children: <Widget>[sport(),history()],
+        controller: controller,
       ),
+      bottomNavigationBar: TabBar(tabs:<Tab>[
+        Tab(icon: Icon(Icons.looks_one, color: Colors.blueGrey,)),
+        Tab(icon: Icon(Icons.looks_two, color: Colors.blueGrey,))
+        ], controller: controller,
+    ),
     );
   }
-}
-class history extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('역사 명언'),
-      ),
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            Container(
-              child: Text("역사는 승자의 전유물이다."),
-            )
-          ],
-        ),
-      ),
-    );
+  void dispose(){
+    controller!.dispose();
+    super.dispose();
   }
 }
-class day extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('일상 명언'),
-      ),
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            Container(
-              child: Text(""),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-class animation extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('만화 명언'),
-      ),
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            Container(
-              child: Text(""),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
+
 
 
